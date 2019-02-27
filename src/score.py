@@ -30,7 +30,6 @@ def get_score_image(pred_image, actual_image):
 def main():
     # image1 = Image.open("D:/dsp_project2_data/masks/0b599d0670fcbafcaa8ed5567c0f4b10b959e6e49eed157be700bc62cffd1876.png")
     # image2 = Image.open("D:/dsp_project2_data/masks/04c85d8f80b9130890fadec7a4da0a1b61f29dda1219c9b745b76d6af654ae62.png")
-    get_score_image(image1, image1)
     accuracy = get_score_image(image1, image1)
     print("Accuracy=", accuracy)
 
