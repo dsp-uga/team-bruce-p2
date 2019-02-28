@@ -1,4 +1,5 @@
 import numpy as np
+from PIL import Image
 from collections import Counter
 
 # Global Variable Declaration
@@ -49,8 +50,8 @@ def main():
 
     """
     DIR = "D:/dsp_project2_data/"
-    train_hash = train_file_name(DIR)
-    test_hash = test_file_name(DIR)
+    train_hash = train_file_name()
+    test_hash = test_file_name()
     different_sizes(train_hash)
 
 
