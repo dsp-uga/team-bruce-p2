@@ -2,6 +2,9 @@ import os
 import subprocess
 import tarfile
 import shutil
+import numpy as numpy
+import pandas as pd
+import matplotlib.image as mpimg
 
 
 class DataLoader:
@@ -16,7 +19,8 @@ class DataLoader:
 	---------
 	url : string
 		Google Cloud Storage bucket URL containing the Cilia data
-
+	data_type: string
+		One of 'train', 'test', 'masks' to return dataframe of that type
 	"""
 	def __init__(self, url="gs://uga-dsp/project2"):
 		"""
@@ -31,8 +35,11 @@ class DataLoader:
 		self.dataset_folder = '../cilia_dataset'
 		self.cwd = os.getcwd()
 		if(os.path.isdir(self.dataset_folder)):
-			pass
-			self.setup_data()
+			if os.path.isdir(os.path.join(self.dataset_folder, 'data')):
+				self.setup_data()
+			else:
+				self.train_hashes = self.read_file(self.dataset_folder + '/train.txt')
+				self.test_hashes = self.read_file(self.dataset_folder + '/test.txt')
 		else:
 			self.download(bucket_url)
 			self.setup_data()
@@ -97,6 +104,45 @@ class DataLoader:
 		list:
 			List containing hashes	
 		"""
-	    f = open(file_name, "r")
-	    return f.read().split()    
-		
+		f = open(file_name, "r")
+		return f.read().split()
+
+
+	def get_df(self, data_type):
+		"""
+		Returns a pandas dataframe where the first column is the hash of the
+		video and the remaining columns are the numpy arrays of the frames of
+		the videos
+
+		Arguments
+		---------
+		data_type: string
+			Type of data to get dataframe for, i.e, 'train', 'test', 'masks'
+
+		Returns:
+		--------
+		df : Pandas Dataframe
+			Dataframe containing hashes of the data type, it's corresponding
+			frames loaded into as numpy arrays
+		"""
+		if data_type == "train":
+			folder = os.path.join(self.dataset_folder, 'train/data')
+			frames = [frame for frame in os.listdir(os.path.join(folder, self.train_hashes[0])) if frame.endswith(".png")]
+			df = pd.DataFrame(self.train_hashes, columns = ['hash_code'])
+			for frame in frames:
+				df[frame[:-4]] = [mpimg.imread(os.path.join(folder, image, frame)) for image in df['hash_code']]
+			return df
+		elif data_type == "test":
+			folder = os.path.join(self.dataset_folder, 'test/data')
+			frames = [frame for frame in os.listdir(os.path.join(folder, self.test_hashes[0])) if frame.endswith(".png")]
+			df = pd.DataFrame(self.test_hashes, columns = ['hash_code'])
+			for frame in frames:
+				df[frame[:-4]] = [mpimg.imread(os.path.join(folder, image, frame)) for image in df['hash_code']]
+			return df
+		elif data_type == "masks":
+			folder = os.path.join(self.dataset_folder, 'masks')
+			df = pd.DataFrame(self.train_hashes, columns = ['hash_code'])
+			df['images'] = [mpimg.imread(os.path.join(folder, image + '.png')) for image in df['hash_code']]
+			return df
+		else:
+			print('Invalid argument:\nArgument can only be one of \"test\", \"train\", or \"masks\"')
