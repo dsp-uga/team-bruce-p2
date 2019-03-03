@@ -28,7 +28,7 @@ def dice_loss_function(y_true, y_pred, smooth=1):
     :y_true: ground truth
     :y_pred: prediction
     :smooth: smoothing parameter to negate division by zero error
-    :return: the negative of dice_loss_function
+    :return: dice loss
     """
     y_true_f = K.flatten(y_true)
     y_pred_f = K.flatten(y_pred)
