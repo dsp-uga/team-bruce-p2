@@ -12,8 +12,7 @@ class DataLoader:
 	Downloads data from Google Storage bucket, if not already in the folder.
 	After downloading, it untars the data, puts the train video files into 
 	'train' folder and test video files in the 'test' folder. Furthermore, 
-	the frames in the train, test videos are returned as numpy arrays, in a
-	Pandas dataframe alongwith their hashes.
+	the dimensions of different image types are estimated.
 
 	Arguments
 	---------
@@ -43,6 +42,9 @@ class DataLoader:
 		else:
 			self.download(bucket_url)
 			self.setup_data()
+		self.train_dimensions = self.get_dimensions("train")
+		self.test_dimensions = self.get_dimensions("test")
+		self.masks_dimensions = self.train_dimensions
 
 
 	def download(self, bucket_url):
@@ -108,41 +110,27 @@ class DataLoader:
 		return f.read().split()
 
 
-	def get_df(self, data_type):
+	def get_dimensions(self, data_type):
 		"""
-		Returns a pandas dataframe where the first column is the hash of the
-		video and the remaining columns are the numpy arrays of the frames of
-		the videos
+		Returns the dimensions of the images in corresponding 'train' or 'test' sets
 
 		Arguments
 		---------
 		data_type: string
-			Type of data to get dataframe for, i.e, 'train', 'test', 'masks'
+			Type of data to get image dimensions of, i.e, 'train', 'test'
 
 		Returns:
 		--------
-		df : Pandas Dataframe
-			Dataframe containing hashes of the data type, it's corresponding
-			frames loaded into as numpy arrays
+		dimensions : List
+			List containing dimension tuples of all images in 'train' or 'test' sets
 		"""
 		if data_type == "train":
 			folder = os.path.join(self.dataset_folder, 'train/data')
-			frames = [frame for frame in os.listdir(os.path.join(folder, self.train_hashes[0])) if frame.endswith(".png")]
-			df = pd.DataFrame(self.train_hashes, columns = ['hash_code'])
-			for frame in frames:
-				df[frame[:-4]] = [mpimg.imread(os.path.join(folder, image, frame)) for image in df['hash_code']]
-			return df
+			dimensions = [mpimg.imread(os.path.join(folder, image, 
+				"frame0000.png")).shape for image in self.train_hashes]
+			return dimensions
 		elif data_type == "test":
 			folder = os.path.join(self.dataset_folder, 'test/data')
-			frames = [frame for frame in os.listdir(os.path.join(folder, self.test_hashes[0])) if frame.endswith(".png")]
-			df = pd.DataFrame(self.test_hashes, columns = ['hash_code'])
-			for frame in frames:
-				df[frame[:-4]] = [mpimg.imread(os.path.join(folder, image, frame)) for image in df['hash_code']]
-			return df
-		elif data_type == "masks":
-			folder = os.path.join(self.dataset_folder, 'masks')
-			df = pd.DataFrame(self.train_hashes, columns = ['hash_code'])
-			df['images'] = [mpimg.imread(os.path.join(folder, image + '.png')) for image in df['hash_code']]
-			return df
-		else:
-			print('Invalid argument:\nArgument can only be one of \"test\", \"train\", or \"masks\"')
+			dimensions = [mpimg.imread(os.path.join(folder, image, 
+				"frame0000.png")).shape for image in self.test_hashes]
+			return dimensions
