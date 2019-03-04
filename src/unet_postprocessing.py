@@ -1,11 +1,7 @@
 import os
 import numpy as np
 import matplotlib.image as mpimg
-from src.data_loader import DataLoader
-import cv2
-
-
-dl = DataLoader()
+from data_loader import DataLoader
 
 
 def get_final_prediction(image, min_value, max_value):
@@ -87,11 +83,6 @@ def histogram_binning(model):
     Divides prediction probabilities of all test images into three bins, assigning 
     '2' to bin with minimum count of prediction probabilities in a bin, and the 
     remaining bins are assigned '0'
-
-    Arguments:
-    ---------
-    model : string
-        User defined model input
     """
     for i in range(len(dl.test_hashes)):
         # Loading saved numpy arrays of predictions from U-Net
@@ -104,7 +95,10 @@ def histogram_binning(model):
         categorical_image = get_final_prediction(reshaped_prediction, min_value, max_value)
         # Unpadding extra pixels in prediction image
         unpadded_image = frame_unpad(categorical_image, dl.test_dimensions[i])
-        cv2.imwrite(os.path.join('results', model, 'predictions', dl.test_hashes[i] + '.png'), 
-            np.array(unpadded_image, dtype=np.uint8))
+        mpimg.imsave(os.path.join('results', model,'predictions', dl.test_hashes[i] + '.png'), 
+        	np.array(unpadded_image, dtype=np.uint8))
     print('Predictions have successfully been saved as images!')
     
+
+dl = DataLoader()
+                   
