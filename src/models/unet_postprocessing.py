@@ -106,7 +106,10 @@ def histogram_binning(model):
         categorical_image = get_final_prediction(reshaped_prediction, min_value, max_value)
         # Unpadding extra pixels in prediction image
         unpadded_image = frame_unpad(categorical_image, dl.test_dimensions[i])
-        cv2.imwrite(os.path.join('results', model, 'predictions', dl.test_hashes[i] + '.png'), 
+        path = os.path.join('results', model, 'predictions')
+        os.makedirs(path)
+        cv2.imwrite(os.path.join(path, dl.test_hashes[i] + '.png'),
             np.array(unpadded_image, dtype=np.uint8))
+
     logger.info('Predictions have successfully been saved as images!')
     
