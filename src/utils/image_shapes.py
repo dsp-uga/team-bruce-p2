@@ -4,8 +4,10 @@ import os
 from collections import Counter
 from operator import itemgetter
 from .data_loader import DataLoader
+import logging
 
 
+logger = logging.getLogger(__name__)
 dl = DataLoader()
 
 
@@ -31,7 +33,7 @@ def different_sizes(key):
     elif key == 'masks':
         dimension_counter = Counter(dl.masks_dimensions)
     else:
-        print('Invalid Argument: Please enter one of \'test\', \'train\', \'masks\'')
+        logger.error('Invalid Argument: Please enter one of \'test\', \'train\', \'masks\'')
     return dimension_counter
 
 
