@@ -160,7 +160,7 @@ def lstm_unet(l2_reg=0.0002, lr=1e-5, kernel_size=3, dropout_rate=0.3, input_sha
     model.compile(optimizer=Adam(lr=lr), loss=dice_loss_function, metrics=[dice_coefficient])
     return model
 
-def LSTM_UNET(model):
+def LstmUnet(model):
     """
         Notice that this model can make predictions, but the parameters are not yet be tuned and thus we don't yet provide any output codes yet.
     """

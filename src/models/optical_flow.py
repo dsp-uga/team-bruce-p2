@@ -53,7 +53,7 @@ def OpticalFlow(model):
             # Each image corresponding to one omg, use 0, 1, 2 to mark background, cell, celia
             # Hard coding the thresholds
             omg2[omg2 < 50] = 0
-            omg2[(omg2 > 49) && (omg2 < 120)] = 1
+            omg2[(omg2 > 49) and (omg2 < 120)] = 1
             omg2[omg2 > 119] = 2
             # Add each frame to sum_mask
             for r in range(omg2.shape[0]):
@@ -66,7 +66,7 @@ def OpticalFlow(model):
                         sum_mask[r][c] += 10
         # Scale sum_mask
         # Hard coding thresholds
-        mask[(sum_mask > 10) && (sum_mask < 100)] = 1
+        mask[(sum_mask > 10) and (sum_mask < 100)] = 1
         mask[sum_mask > 100] = 2
         omask = Image.fromarray(mask)
         omask.save(os.path.join('results', model, file + '.png'), 0)

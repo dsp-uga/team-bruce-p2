@@ -59,7 +59,7 @@ class DataLoader:
 		bucket_url: string
 			Google Cloud Storage bucket URL containing the Cilia data
 		"""
-		if os.path.isdir('project'):
+		if os.path.isdir('cilia_dataset'):
 			pass
 		else:
 			logger.info('=====> Downloading Cilia dataset from Google Storage Bucket <======')
