@@ -11,14 +11,21 @@ import numpy as np
 from PIL import Image
 import os
 from src.data_loader import DataLoader
+import logging
 
 
+logger = logging.getLogger(__name__)
 dl = DataLoader()
 
 
 def OpticalFlow(model):
     """
     Applies optical flow technique to save new masks
+    
+    Arguments
+    ----------
+    model : string
+        User-defined model, to create cilia masks
     """
     count = 0
     for file in dl.test_hashes:
@@ -63,4 +70,4 @@ def OpticalFlow(model):
         mask[sum_mask > 100] = 2
         omask = Image.fromarray(mask)
         omask.save(os.path.join('results', model, file + '.png'), 0)
-        print('Progress: ' + str(int(count / len(dl.test_hashes) * 100)) + '%')
+        logger.info('Progress: ' + str(int(count / len(dl.test_hashes) * 100)) + '%')

@@ -3,6 +3,10 @@ import subprocess
 import tarfile
 import shutil
 import matplotlib.image as mpimg
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 class DataLoader:
@@ -58,10 +62,10 @@ class DataLoader:
 		if os.path.isdir('project'):
 			pass
 		else:
-			print('=====> Downloading Cilia dataset from Google Storage Bucket <======')
+			logger.info('=====> Downloading Cilia dataset from Google Storage Bucket <======')
 			subprocess.call('mkdir project project/cilia_dataset', shell = True)
 			subprocess.call('/usr/bin/gsutil rsync -r ' + bucket_url + '/ project/cilia_dataset',  shell=True)
-			print('=====> Finished downloading Cilia dataset <=====')
+			logger.info('=====> Finished downloading Cilia dataset <=====')
 
 		
 	def setup_data(self):
@@ -71,7 +75,7 @@ class DataLoader:
 		video files to 'train' and 'test' respectively, and to clean the 
 		remaining tar files.
 		"""
-		print('=====> Setting up Cilia dataset folder <======')
+		logger.info('=====> Setting up Cilia dataset folder <======')
 		self.train_hashes = self.read_file(self.dataset_folder + '/train.txt')
 		self.test_hashes = self.read_file(self.dataset_folder + '/test.txt')
 		# Extract train tar files into 'train' folder
@@ -92,7 +96,7 @@ class DataLoader:
 			if item.endswith(".tar"):
 				os.remove(os.path.join(self.dataset_folder, item))
 		shutil.rmtree(self.dataset_folder + '/data')
-		print('=====> Finished setting up Cilia dataset folder <======')
+		logger.info('=====> Finished setting up Cilia dataset folder <======')
 
 
 

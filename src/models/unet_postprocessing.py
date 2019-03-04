@@ -3,8 +3,10 @@ import numpy as np
 import matplotlib.image as mpimg
 from src.data_loader import DataLoader
 import cv2
+import logging
 
 
+logger = logging.getLogger(__name__)
 dl = DataLoader()
 
 
@@ -106,5 +108,5 @@ def histogram_binning(model):
         unpadded_image = frame_unpad(categorical_image, dl.test_dimensions[i])
         cv2.imwrite(os.path.join('results', model, 'predictions', dl.test_hashes[i] + '.png'), 
             np.array(unpadded_image, dtype=np.uint8))
-    print('Predictions have successfully been saved as images!')
+    logger.info('Predictions have successfully been saved as images!')
     
