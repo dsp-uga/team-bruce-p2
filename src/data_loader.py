@@ -2,8 +2,6 @@ import os
 import subprocess
 import tarfile
 import shutil
-import numpy as numpy
-import pandas as pd
 import matplotlib.image as mpimg
 
 
@@ -49,16 +47,19 @@ class DataLoader:
 
 	def download(self, bucket_url):
 		"""
-		Downloads Cilia data from Google Storage bucket
+		Downloads Cilia data from Google Storage bucket into 'project/cilia_dataset'
+		folder in the Compute Engine VM
 
 		Arguments
 		---------
 		bucket_url: string
 			Google Cloud Storage bucket URL containing the Cilia data
 		"""
-		os.mkdir(self.dataset_folder)
-		os.chdir(self.dataset_folder)
-		subprocess.call('google-cloud-sdk/bin/gsutil -m cp -r ' + bucket_url + '/*',  shell=True)
+		if os.path.isdir('project'):
+			pass
+		else:
+			subprocess.call('mkdir project project/cilia_dataset', shell = True)
+			subprocess.call('/usr/bin/gsutil rsync -r ' + bucket_url + '/ project/cilia_dataset',  shell=True)
 		os.chdir(self.cwd)
 
 		
