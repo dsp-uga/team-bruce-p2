@@ -1,6 +1,9 @@
 import argparse
 from src.data_loader import DataLoader
 from src.models.unet import UNet
+from src.models.unet_postprocessing import histogram_binning
+from src.models.optical_flow import OpticalFlow
+
 
 parser = argparse.ArgumentParser(description='Team Bruce: Cilia Segmentation')
 parser.add_argument('--model', type=str, choices=['unet', 'variance', 'optical-flow', 'robust-pca'], 
@@ -14,11 +17,15 @@ model = args.model
 
 dl = DataLoader(args.url, args.data)
 if model == 'unet':
-	UNet()
+	UNet(model)
+	print('Successfully trained U-Net model on Cilia Dataset!')
+	histogram_binning(model)
+	print('Prediction masks have been saved in \'results/unet/predictions\' directory.')
 elif model == 'variance':
 	pass
 elif model == 'optical-flow':
-	pass
+	OpticalFlow(model)
+	print('Prediction masks have been saved in \'results/optical-flow/predictions\' directory.')
 elif model == 'robust-pca':
 	pass
 
