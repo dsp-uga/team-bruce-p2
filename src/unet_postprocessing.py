@@ -86,7 +86,7 @@ def histogram_binning():
     """
     for i in range(len(dl.test_hashes)):
         # Loading saved numpy arrays of predictions from U-Net
-        prediction = np.load("../results/experiment1/experiment1/prediction" + str(i) + ".npy")
+        prediction = np.load("results/experiment1/experiment1/prediction" + str(i) + ".npy")
         # Reshaping the prediction into (640, 640)
         reshaped_prediction = np.ndarray.flatten(prediction).reshape(640,640)
         # Get minimum and maximum thresholds
@@ -95,7 +95,7 @@ def histogram_binning():
         categorical_image = get_final_prediction(reshaped_prediction, min_value, max_value)
         # Unpadding extra pixels in prediction image
         unpadded_image = frame_unpad(categorical_image, dl.test_dimensions[i])
-        mpimg.imsave(os.path.join('../results/unet-1', dl.test_hashes[i] + '.png'), unpadded_image)
+        mpimg.imsave(os.path.join('results/unet-1', dl.test_hashes[i] + '.png'), np.array(unpadded_image, dtype=np.uint8))
     print('Predictions have successfully been saved as images!')
     
 
