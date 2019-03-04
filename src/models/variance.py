@@ -7,12 +7,11 @@ import matplotlib.image as mpimg
 import os
 import cv2 as cv
 import pandas as pd
+from src.data_loader import DataLoader
+import logging
 
-MASK_DIR = "../masks/"
-DATA_DIR = "../data/"
-TRAIN_FILE = "../train.txt"
-TEST_FILE = "../test.txt"
-RESULT_DIR = "../result/"
+logger = logging.getLogger(__name__)
+dl = DataLoader()
 
 def read_file(file_name):
     f = open(file_name, "r")
@@ -40,8 +39,8 @@ def std_thresholding(std_image,threshold):
     predicted_mask = np.array([[2 if x > threshold else 0 for x in line] for line in std_image])
     return predicted_mask
 
-def variance(model):
-    test_hash = read_file(TEST_FILE)
+def VARIANCE(model):
+    test_hash = dl.test_hashes
 
     # Reading images
 
@@ -56,8 +55,8 @@ def variance(model):
     test_df['pred_mask'] = [std_thresholding(x,threshold) for x in test_df['std']]
 
     # Output the result
-    if not os.path.isdir(RESULT_DIR):
-        os.mkdir(RESULT_DIR)
+    if not os.path.isdir(os.path.join('results',model):
+        os.mkdir(os.path.join('results',model)
 
     for index, test_sample in test_df.iterrows():
-        cv.imwrite(RESULT_DIR+ test_sample['Hash_code'] + '.png', test_sample['pred_mask'])
+        cv.imwrite(os.path.join('results', model, file + '.png'), test_sample['pred_mask'])

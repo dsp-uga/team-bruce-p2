@@ -15,12 +15,11 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras.optimizers import Adam
 from keras.utils import to_categorical
+from src.data_loader import DataLoader
+import logging
 
-MASK_DIR = "../masks/"
-DATA_DIR = "../data/"
-TRAIN_FILE = "../train.txt"
-TEST_FILE = "../test.txt"
-RESULT_DIR = "../result/"
+logger = logging.getLogger(__name__)
+dl = DataLoader()
 
 def read_file(file_name):
     f = open(file_name, "r")
@@ -161,9 +160,11 @@ def lstm_unet(l2_reg=0.0002, lr=1e-5, kernel_size=3, dropout_rate=0.3, input_sha
     model.compile(optimizer=Adam(lr=lr), loss=dice_loss_function, metrics=[dice_coefficient])
     return model
 
-def main():
-    train_hash = read_file(TRAIN_FILE)
-    small_train_hash = train_hash[:5]
+def LSTM_UNET(model):
+    """
+        Notice that this model can make predictions, but the parameters are not yet be tuned and thus we don't yet provide any output codes yet.
+    """
+    train_hash = dl.test_hashes
 
     # Read in as pandas dataframe
     train_df = pd.DataFrame(train_hash,columns=['Hash_code'])
@@ -184,5 +185,3 @@ def main():
     # Making predictions
     prediction = model.predict(np.stack(X_train,axis=0)[...,np.newaxis])
 
-if __name__ == '__main__':
-    main()

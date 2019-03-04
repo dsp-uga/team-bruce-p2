@@ -24,8 +24,12 @@ if model == 'unet':
 	logger.info('Successfully trained U-Net model on Cilia Dataset!')
 	histogram_binning(model)
 	print('Prediction masks have been saved in \'results/unet/predictions\' directory.')
+elif model == 'lstm_unet':
+    LSTM_UNET(model)
+    print('Prediction masks have been finished.')
 elif model == 'variance':
-	pass
+	VARIANCE(model)
+    print('Prediction masks have been saved in \'results/variance/predictions\' directory.')
 elif model == 'optical-flow':
 	OpticalFlow(model)
 	logger.info('Prediction masks have been saved in \'results/optical-flow/predictions\' directory.')
