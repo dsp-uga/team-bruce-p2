@@ -19,7 +19,7 @@ class DataLoader:
 	data_type: string
 		One of 'train', 'test', 'masks' to return dataframe of that type
 	"""
-	def __init__(self, url="gs://uga-dsp/project2"):
+	def __init__(self, url="gs://uga-dsp/project2", data='cilia_dataset'):
 		"""
 		Creates a loader for Cilia data
 
@@ -29,7 +29,7 @@ class DataLoader:
 			Google Cloud Storage bucket URL containing the Cilia data
 		"""
 		bucket_url = url
-		self.dataset_folder = '../cilia_dataset'
+		self.dataset_folder = data
 		self.cwd = os.getcwd()
 		if(os.path.isdir(self.dataset_folder)):
 			if os.path.isdir(os.path.join(self.dataset_folder, 'data')):
@@ -58,9 +58,10 @@ class DataLoader:
 		if os.path.isdir('project'):
 			pass
 		else:
+			print('=====> Downloading Cilia dataset from Google Storage Bucket <======')
 			subprocess.call('mkdir project project/cilia_dataset', shell = True)
 			subprocess.call('/usr/bin/gsutil rsync -r ' + bucket_url + '/ project/cilia_dataset',  shell=True)
-		os.chdir(self.cwd)
+			print('=====> Finished downloading Cilia dataset <=====')
 
 		
 	def setup_data(self):
@@ -70,6 +71,7 @@ class DataLoader:
 		video files to 'train' and 'test' respectively, and to clean the 
 		remaining tar files.
 		"""
+		print('=====> Setting up Cilia dataset folder <======')
 		self.train_hashes = self.read_file(self.dataset_folder + '/train.txt')
 		self.test_hashes = self.read_file(self.dataset_folder + '/test.txt')
 		# Extract train tar files into 'train' folder
@@ -90,6 +92,8 @@ class DataLoader:
 			if item.endswith(".tar"):
 				os.remove(os.path.join(self.dataset_folder, item))
 		shutil.rmtree(self.dataset_folder + '/data')
+		print('=====> Finished setting up Cilia dataset folder <======')
+
 
 
 	def read_file(self, file_name):
