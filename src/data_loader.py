@@ -2,9 +2,11 @@ import os
 import subprocess
 import tarfile
 import shutil
-import numpy as numpy
-import pandas as pd
 import matplotlib.image as mpimg
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 class DataLoader:
@@ -21,7 +23,7 @@ class DataLoader:
 	data_type: string
 		One of 'train', 'test', 'masks' to return dataframe of that type
 	"""
-	def __init__(self, url="gs://uga-dsp/project2"):
+	def __init__(self, url="gs://uga-dsp/project2", data='cilia_dataset'):
 		"""
 		Creates a loader for Cilia data
 
@@ -31,7 +33,7 @@ class DataLoader:
 			Google Cloud Storage bucket URL containing the Cilia data
 		"""
 		bucket_url = url
-		self.dataset_folder = '../cilia_dataset'
+		self.dataset_folder = data
 		self.cwd = os.getcwd()
 		if(os.path.isdir(self.dataset_folder)):
 			if os.path.isdir(os.path.join(self.dataset_folder, 'data')):
@@ -49,17 +51,21 @@ class DataLoader:
 
 	def download(self, bucket_url):
 		"""
-		Downloads Cilia data from Google Storage bucket
+		Downloads Cilia data from Google Storage bucket into 'project/cilia_dataset'
+		folder in the Compute Engine VM
 
 		Arguments
 		---------
 		bucket_url: string
 			Google Cloud Storage bucket URL containing the Cilia data
 		"""
-		os.mkdir(self.dataset_folder)
-		os.chdir(self.dataset_folder)
-		subprocess.call('google-cloud-sdk/bin/gsutil -m cp -r ' + bucket_url + '/*',  shell=True)
-		os.chdir(self.cwd)
+		if os.path.isdir('project'):
+			pass
+		else:
+			logger.info('=====> Downloading Cilia dataset from Google Storage Bucket <======')
+			subprocess.call('mkdir project/cilia_dataset', shell = True)
+			subprocess.call('/usr/bin/gsutil rsync -r ' + bucket_url + '/ project/cilia_dataset',  shell=True)
+			logger.info('=====> Finished downloading Cilia dataset <=====')
 
 		
 	def setup_data(self):
@@ -69,6 +75,7 @@ class DataLoader:
 		video files to 'train' and 'test' respectively, and to clean the 
 		remaining tar files.
 		"""
+		logger.info('=====> Setting up Cilia dataset folder <======')
 		self.train_hashes = self.read_file(self.dataset_folder + '/train.txt')
 		self.test_hashes = self.read_file(self.dataset_folder + '/test.txt')
 		# Extract train tar files into 'train' folder
@@ -89,6 +96,8 @@ class DataLoader:
 			if item.endswith(".tar"):
 				os.remove(os.path.join(self.dataset_folder, item))
 		shutil.rmtree(self.dataset_folder + '/data')
+		logger.info('=====> Finished setting up Cilia dataset folder <======')
+
 
 
 	def read_file(self, file_name):
