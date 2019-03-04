@@ -39,7 +39,7 @@ def std_thresholding(std_image,threshold):
     predicted_mask = np.array([[2 if x > threshold else 0 for x in line] for line in std_image])
     return predicted_mask
 
-def VARIANCE(model):
+def Variance(model):
     test_hash = dl.test_hashes
 
     # Reading images
