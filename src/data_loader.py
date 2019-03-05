@@ -63,8 +63,8 @@ class DataLoader:
 			pass
 		else:
 			logger.info('=====> Downloading Cilia dataset from Google Storage Bucket <======')
-			subprocess.call('mkdir project/cilia_dataset', shell = True)
-			subprocess.call('/usr/bin/gsutil rsync -r ' + bucket_url + '/ project/cilia_dataset',  shell=True)
+			subprocess.call('mkdir cilia_dataset', shell = True)
+			subprocess.call('/usr/bin/gsutil -m rsync -r ' + bucket_url + '/ cilia_dataset',  shell=True)
 			logger.info('=====> Finished downloading Cilia dataset <=====')
 
 		

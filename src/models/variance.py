@@ -7,7 +7,7 @@ import matplotlib.image as mpimg
 import os
 import cv2 as cv
 import pandas as pd
-from src.data_loader import DataLoader
+from ..data_loader import DataLoader
 import logging
 
 logger = logging.getLogger(__name__)
@@ -55,8 +55,8 @@ def Variance(model):
     test_df['pred_mask'] = [std_thresholding(x,threshold) for x in test_df['std']]
 
     # Output the result
-    if not os.path.isdir(os.path.join('results',model):
-        os.mkdir(os.path.join('results',model)
-
-    for index, test_sample in test_df.iterrows():
-        cv.imwrite(os.path.join('results', model, file + '.png'), test_sample['pred_mask'])
+#    if not os.path.isdir(os.path.join('results',model)):
+#        os.mkdir(os.path.join('results',model)
+#
+#    for index, test_sample in test_df.iterrows():
+#        cv.imwrite(os.path.join('results', model, file + '.png'), test_sample['pred_mask'])

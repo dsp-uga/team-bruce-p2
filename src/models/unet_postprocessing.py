@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import matplotlib.image as mpimg
-from src.data_loader import DataLoader
+from ..data_loader import DataLoader
 import cv2
 import logging
 
