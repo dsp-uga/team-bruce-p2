@@ -9,7 +9,7 @@
   - Compute Score
 
 * <a href = "https://github.com/floraleilei">Lei Xian</a>
-  - Optical Flow
+  - Optical Flow combined with K-means
   
 * <a href = "https://github.com/YangAzure">Yang Shi </a> 
   - Variance Model
