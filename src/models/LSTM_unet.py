@@ -15,7 +15,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras.optimizers import Adam
 from keras.utils import to_categorical
-from src.data_loader import DataLoader
+from ..data_loader import DataLoader
 import logging
 
 logger = logging.getLogger(__name__)
@@ -41,8 +41,8 @@ def get_image(hash_code):
 def dice_loss_function(y_true, y_pred, smooth=1):
     """
         This is identical to unet.py
-        This function is implementation of Sørensen–Dice coefficient
-        :y_true: ground truth
+        This function is an implementation of Sorenson-Dice Loss function
+        :y-true: ground truth
         :y_pred: prediction
         :smooth: smoothing parameter to negate division by zero error
         :return: dice loss
@@ -56,7 +56,7 @@ def dice_loss_function(y_true, y_pred, smooth=1):
 def dice_coefficient(y_true, y_pred):
     """
         This is identical to unet.py
-        This function is implementation of Sørensen–Dice coefficient
+        This function is an implementation of Sorenson-Dice coefficient
         :y_true: ground truth
         :y_pred: prediction
         :return: the negative of dice_loss_function
@@ -160,7 +160,7 @@ def lstm_unet(l2_reg=0.0002, lr=1e-5, kernel_size=3, dropout_rate=0.3, input_sha
     model.compile(optimizer=Adam(lr=lr), loss=dice_loss_function, metrics=[dice_coefficient])
     return model
 
-def LSTM_UNET(model):
+def LstmUnet(model):
     """
         Notice that this model can make predictions, but the parameters are not yet be tuned and thus we don't yet provide any output codes yet.
     """

@@ -1,8 +1,15 @@
+import site
+import os
+site.addsitedir(os.path.dirname(os.path.realpath(__file__)))
+
+
 import argparse
 from src.data_loader import DataLoader
 from src.models.unet import UNet
 from src.models.unet_postprocessing import histogram_binning
 from src.models.optical_flow import OpticalFlow
+from src.models.variance import Variance
+from src.models.lstm_unet import LstmUnet
 import logging
 
 
@@ -25,11 +32,11 @@ if model == 'unet':
 	histogram_binning(model)
 	print('Prediction masks have been saved in \'results/unet/predictions\' directory.')
 elif model == 'lstm_unet':
-    LSTM_UNET(model)
-    print('Prediction masks have been finished.')
+	LstmUnet(model)
+	print('Prediction masks have been finished.')
 elif model == 'variance':
-	VARIANCE(model)
-    print('Prediction masks have been saved in \'results/variance/predictions\' directory.')
+	Variance(model)
+	print('Prediction masks have been saved in \'results/variance/predictions\' directory.')
 elif model == 'optical-flow':
 	OpticalFlow(model)
 	logger.info('Prediction masks have been saved in \'results/optical-flow/predictions\' directory.')

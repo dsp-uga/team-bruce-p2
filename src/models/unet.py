@@ -8,7 +8,7 @@ The Batch Normalisation is based on the
 "Batch Normalization: Accelerating Deep Network Training by Reducing
 Internal Covariate Shift" by Sergey Ioffe, Christian Szegedy
 """
-from src.data_loader import DataLoader
+from ..data_loader import DataLoader
 from matplotlib import image as mpimg
 import numpy as np
 import os
