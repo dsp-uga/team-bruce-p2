@@ -51,7 +51,7 @@ class DataLoader:
 
 	def download(self, bucket_url):
 		"""
-		Downloads Cilia data from Google Storage bucket into 'project/cilia_dataset'
+		Downloads Cilia data from Google Storage bucket into 'cilia_dataset'
 		folder in the Compute Engine VM
 
 		Arguments
@@ -63,8 +63,8 @@ class DataLoader:
 			pass
 		else:
 			logger.info('=====> Downloading Cilia dataset from Google Storage Bucket <======')
-			subprocess.call('mkdir project/cilia_dataset', shell = True)
-			subprocess.call('/usr/bin/gsutil rsync -r ' + bucket_url + '/ project/cilia_dataset',  shell=True)
+			subprocess.call('mkdir cilia_dataset', shell = True)
+			subprocess.call('/usr/bin/gsutil rsync -r ' + bucket_url + '/ cilia_dataset',  shell=True)
 			logger.info('=====> Finished downloading Cilia dataset <=====')
 
 		

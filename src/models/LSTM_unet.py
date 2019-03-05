@@ -15,7 +15,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras.optimizers import Adam
 from keras.utils import to_categorical
-from src.data_loader import DataLoader
+from ..data_loader import DataLoader
 import logging
 
 logger = logging.getLogger(__name__)

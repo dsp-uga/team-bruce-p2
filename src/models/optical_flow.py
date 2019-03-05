@@ -10,7 +10,7 @@ import cv2
 import numpy as np
 from PIL import Image
 import os
-from src.data_loader import DataLoader
+from ..data_loader import DataLoader
 import logging
 
 

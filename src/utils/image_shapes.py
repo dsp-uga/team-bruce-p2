@@ -3,7 +3,7 @@ from PIL import Image
 import os
 from collections import Counter
 from operator import itemgetter
-from .data_loader import DataLoader
+from src.data_loader import DataLoader
 import logging
 
 

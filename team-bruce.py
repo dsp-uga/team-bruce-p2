@@ -4,7 +4,7 @@ site.addsitedir(os.path.dirname(os.path.realpath(__file__)))
 
 
 import argparse
-from src.data_loader import DataLoader
+from src.data_loader ipmort DataLoader
 from src.models.unet import UNet
 from src.models.unet_postprocessing import histogram_binning
 from src.models.optical_flow import OpticalFlow
@@ -30,14 +30,13 @@ if model == 'unet':
 	UNet(model)
 	logger.info('Successfully trained U-Net model on Cilia Dataset!')
 	histogram_binning(model)
-	print('Prediction masks have been saved in \'results/unet/predictions\' directory.')
+	logger.info('Prediction masks have been saved in \'results/unet/predictions\' directory.')
 elif model == 'lstm_unet':
 	LstmUnet(model)
-	print('Prediction masks have been finished.')
+	logger.info('Prediction masks have been finished.')
 elif model == 'variance':
 	Variance(model)
-	print('Prediction masks have been saved in \'results/variance/predictions\' directory.')
-elif model == 'optical-flow':
+	logger.info('Prediction masks have been saved in \'results/variance/predictions\' directory.') elif model == 'optical-flow':
 	OpticalFlow(model)
 	logger.info('Prediction masks have been saved in \'results/optical-flow/predictions\' directory.')
 elif model == 'robust-pca':

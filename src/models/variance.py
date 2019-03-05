@@ -7,7 +7,7 @@ import matplotlib.image as mpimg
 import os
 import cv2 as cv
 import pandas as pd
-from src.data_loader import DataLoader
+from ..data_loader import DataLoader
 import logging
 
 logger = logging.getLogger(__name__)
