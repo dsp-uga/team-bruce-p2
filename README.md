@@ -22,10 +22,9 @@
   Considering our inexperience in dealing with images, and the challenges/ambiguity in the Cilia dataset, our Autolab submissions were, in general, pretty average and well under our expectations, for the variety of models that we implemented through the course of this project.
 
 ## Contributors
-* See [Contributors]() file for more details.
+* See [Contributors](https://github.com/dsp-uga/team-bruce-p2/blob/master/CONTRIBUTORS.md) file for more details.
 
-## Authors
-* [Aashish Yadavally](https://github.com/aashishyadavally)
+
 
 ## License
 This project is licensed under the **MIT License**. See [LICENSE](https://github.com/dsp-uga/team-bruce-p2/blob/master/LICENSE) for more details.
