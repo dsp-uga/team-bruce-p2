@@ -1,3 +1,11 @@
+"""
+Script to post-process the 'npy' files, so as to obtain the prediction masks. Includes
+frame unpadding, histogram binning and thresholding. 
+---------------------------
+Author : Aashish Yadavally
+"""
+
+
 import os
 import numpy as np
 import matplotlib.image as mpimg
@@ -110,23 +118,4 @@ def histogram_binning(model):
         unpadded_image = frame_unpad(categorical_image, dl.test_dimensions[i])
         cv2.imwrite(os.path.join(path, dl.test_hashes[i] + '.png'),
             np.array(unpadded_image, dtype=np.uint8))
-
     logger.info('Predictions have successfully been saved as images!')
-    
-#def KMeans_binning(model):
-
-#    for i in range(len(dl.test_hashes)):
-#        prediction = np.load(os.path.join('../../../results/experiment1/experiment1', 'prediction'+ str(i) + ".npy"))
-#        reshaped_prediction = 
-
-clustered_prediction = []
-for i in range(len(dl.test_hashes)):
-    prediction = np.load(os.path.join('../../Newfolder/results/experiment1/experiment1', 'prediction'+ str(i) + ".npy"))
-    x, y, z = prediction.shape
-    reshaped_prediction = prediction.reshape(x*y, z)
-    unpadded_prediction = frame_unpad(reshaped_prediction, dl.rest_dimensions[i])
-    kmeans_cluster = cluster.KMeans(n_clusters = 3)
-    clustered_prediction.append(kmeans_cluster.fit_predict(unpadded_prediction))
-    print(i)
-    np.save(os.path.join('../../kmeans', 'prediction' + str(i)))
-        

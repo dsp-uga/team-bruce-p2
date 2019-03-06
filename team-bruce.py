@@ -1,10 +1,19 @@
+"""						
+This script is the starter script that the user needs to run, which will set up 
+the dataset, call the corresponding models that the user chooses, and write the
+results into the 'results' directory.
+---------------------------
+Author : Aashish Yadavally
+"""
+
+
 import site
 import os
-site.addsitedir(os.path.dirname(os.path.realpath(__file__)))
+site.addsitedir(os.path.dirname(os.path.realpath(__file__))) 
 
 
 import argparse
-from src.data_loader ipmort DataLoader
+from src.data_loader import DataLoader
 from src.models.unet import UNet
 from src.models.unet_postprocessing import histogram_binning
 from src.models.optical_flow import OpticalFlow
@@ -15,8 +24,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 parser = argparse.ArgumentParser(description='Team Bruce: Cilia Segmentation')
-parser.add_argument('--model', type=str, choices=['unet', 'variance', 'optical-flow', 'robust-pca'], 
+parser.add_argument('--model', type=str, choices=['unet', 'variance', 'optical-flow', 'lstm-unet'], 
 	default='unet', help = 'model to use for cilia segmentation')
 parser.add_argument('--url', type=str, default='gs://uga-dsp/project2', 
 	help='google storage bucket url')
@@ -36,8 +46,9 @@ elif model == 'lstm_unet':
 	logger.info('Prediction masks have been finished.')
 elif model == 'variance':
 	Variance(model)
-	logger.info('Prediction masks have been saved in \'results/variance/predictions\' directory.') elif model == 'optical-flow':
+	print('Prediction masks have been saved in \'results/variance/predictions\' directory.')
+elif model == 'optical-flow':
 	OpticalFlow(model)
 	logger.info('Prediction masks have been saved in \'results/optical-flow/predictions\' directory.')
-elif model == 'robust-pca':
-	pass
+else:
+	logger.error('Invalid choice entered for model!')

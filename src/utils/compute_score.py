@@ -1,3 +1,11 @@
+"""                     
+This script helps compute the IOU (Intersection over Union) score, which 
+can be used as an evaluation metric over the validation set. 
+-----------------------------------------
+Author : Anirudh Kumar Maurya Kakarlapudi
+"""
+
+
 import numpy as np
 from PIL import Image
 from src.data_loader import DataLoader
@@ -32,8 +40,8 @@ def get_score_image(pred_image, actual_image):
 
 def get_mean_score(pred_masks_path, actual_masks_path, filenames):
     """
-    Compares all the predicted masks and actual masks in a path using get_score_image
-    function to get individual accuracies
+    Compares all the predicted masks with actual masks in a path using the
+    get_score_image function to get individual accuracies
 
     :pred_masks_path: Predicted mask path
     :actual_masks_path: Actual mask path 
