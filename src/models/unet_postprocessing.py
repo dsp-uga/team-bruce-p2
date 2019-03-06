@@ -1,3 +1,11 @@
+"""
+Script to post-process the 'npy' files, so as to obtain the prediction masks. Includes
+frame unpadding, histogram binning and thresholding. 
+---------------------------
+Author : Aashish Yadavally
+"""
+
+
 import os
 import numpy as np
 import matplotlib.image as mpimg
@@ -110,6 +118,4 @@ def histogram_binning(model):
         os.makedirs(path)
         cv2.imwrite(os.path.join(path, dl.test_hashes[i] + '.png'),
             np.array(unpadded_image, dtype=np.uint8))
-
     logger.info('Predictions have successfully been saved as images!')
-    

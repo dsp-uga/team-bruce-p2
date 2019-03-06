@@ -1,4 +1,4 @@
-'''
+"""
 Optical Flow Model using test dataset combineed with K-Mean(3 mean) to cluster cell, background and celia
 
 Optical flow is based on the implementation from:
@@ -7,8 +7,10 @@ Optical flow is based on the implementation from:
 
 K-Mean is based on the implementation from:
 "https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_ml/py_kmeans/py_kmeans_opencv/py_kmeans_opencv.html"
+-----------------
+Author : Lie Xian
+"""
 
-'''
 
 import cv2
 import numpy as np
@@ -19,10 +21,33 @@ import logging
 
 
 def read_file(file_name):
+    """
+    Reads the text files containing hashes and returns the hashes
+    in a list
+
+    Arguments
+    ---------
+    file_name : string
+        Name of the files containing train hashes and test hashes
+
+    Returns:
+    --------
+    list:
+        List containing hashes  
+    """
     f = open(file_name, "r")
     return f.read().split()
 
-def optflow():
+def OpticalFlow(model):
+    """
+    Implementation of the Optical Flow model, which generates predictions based
+    on hard thresholds
+
+    Arguments
+    ---------
+    model : string
+        User-inputted argument
+    """
     test_hash = read_file('../test.txt')
     count = 0
     for h in test_hash:
@@ -62,12 +87,20 @@ def optflow():
                     else:
                         sum_mask[r][c] += 2
             prvs = nxt
-    
         img = Image.fromarray(sum_mask)
         img.save('../optflow/'+h+'.png', 0)
         
         
-def optflow_kmean():
+def OpticalFlow_KMeans(model):
+    """
+    Implementation of the Optical Flow model, which generates predictions based
+    on KMeans Clustering algorithm.
+
+    Arguments
+    ---------
+    model : string
+        User-inputted argument
+    """
     test_hash = read_file('../test.txt')
     for h in test_hash:
         img = cv2.imread('../optflow/'+h+'.png')
@@ -91,6 +124,3 @@ def optflow_kmean():
         res2[res2!=2]=0
         res3 = Image.fromarray(res2)
         res3.save('../predictions/'+h+'.png')
-
-optflow()
-optflow_kmean()

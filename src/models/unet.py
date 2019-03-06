@@ -1,13 +1,16 @@
 """
-U-Net Model
-
+Script for U-Net Model:
 This model is based on the implementation from
 "https://github.com/zhixuhao/unet"
 
 The Batch Normalisation is based on the
 "Batch Normalization: Accelerating Deep Network Training by Reducing
 Internal Covariate Shift" by Sergey Ioffe, Christian Szegedy
+-------------------------
+Authors : Aashish Yadavally, Anirudh Kumar Maurya Kakarlapudi
 """
+
+
 from ..data_loader import DataLoader
 from matplotlib import image as mpimg
 import numpy as np
@@ -77,8 +80,7 @@ def get_images(filenames, key):
 
 def image_loader(key):
     """
-    This function loads all the images,pads, reshapes and
-    expands the dimensions of image
+    This function loads all the images,pads, reshapes and expands the dimensions of image
     :key: The key used to specify either train, mask or test images to be read
     :return: a stack of image arrays of same shape
     """
@@ -279,7 +281,7 @@ def UNet(model):
     test_x = image_loader('test')
     train_y = image_loader('masks')
     model = unet_model()
-    model.fit([train_x], [train_y])
+    model.fit([train_x], [train_y], batch_size=32)
     prediction = model.predict([test_x])
     for i in range(len(prediction)):
         filename = os.path.join('results', model, 'pred_arrays', 'prediction' + str(i))

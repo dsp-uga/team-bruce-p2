@@ -1,3 +1,12 @@
+"""						
+This script downloads the dataset from the Google Storage bucket, sets into	
+up for further access, and generates a few class variables which can be 
+used elsewhere, so as to avoid multiple image reads.
+---------------------------
+Author : Aashish Yadavally
+"""
+
+
 import os
 import subprocess
 import tarfile
@@ -64,7 +73,8 @@ class DataLoader:
 		else:
 			logger.info('=====> Downloading Cilia dataset from Google Storage Bucket <======')
 			subprocess.call('mkdir cilia_dataset', shell = True)
-			subprocess.call('/usr/bin/gsutil -m rsync -r ' + bucket_url + '/ cilia_dataset',  shell=True)
+			subprocess.call('/usr/bin/gsutil -m rsync -r ' + bucket_url + 
+				'/ cilia_dataset',  shell=True)
 			logger.info('=====> Finished downloading Cilia dataset <=====')
 
 		
@@ -79,15 +89,19 @@ class DataLoader:
 		self.train_hashes = self.read_file(self.dataset_folder + '/train.txt')
 		self.test_hashes = self.read_file(self.dataset_folder + '/test.txt')
 		# Extract train tar files into 'train' folder
-		os.mkdir(self.dataset_folder + '/train') if not(os.path.isdir(self.dataset_folder + '/train')) else None
+		os.mkdir(self.dataset_folder + '/train') if not(os.path.isdir(self.dataset_folder 
+			+ '/train')) else None
 		for train_hash in self.train_hashes:
-			tar = tarfile.open(os.path.join(self.dataset_folder + '/data', str(train_hash) + '.tar'))
+			tar = tarfile.open(os.path.join(self.dataset_folder + '/data', 
+				str(train_hash) + '.tar'))
 			tar.extractall(self.dataset_folder + "/train/")
 			tar.close()
 		# Extract test tar files into 'test' folder
-		os.mkdir(self.dataset_folder + '/test') if not(os.path.isdir(self.dataset_folder + '/test')) else None
+		os.mkdir(self.dataset_folder + '/test') if not(os.path.isdir(self.dataset_folder 
+			+ '/test')) else None
 		for test_hash in self.test_hashes:
-			tar = tarfile.open(os.path.join(self.dataset_folder + '/data', str(test_hash) + '.tar'))
+			tar = tarfile.open(os.path.join(self.dataset_folder + '/data', str(test_hash) 
+				+ '.tar'))
 			tar.extractall(self.dataset_folder + "/test/")
 			tar.close()
 		# Remove tar files from 'cilia_dataset' directory

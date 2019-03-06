@@ -1,3 +1,10 @@
+"""                     
+This script helps compute the different shapes of images in the dataset,
+and also the maximum dimensions across all the images in a set. 
+------------------------------------------------------------
+Author : Anirudh Kumar Maurya Kakarlapudi, Aashish Yadavally
+"""
+
 import numpy as np
 from PIL import Image
 import os
