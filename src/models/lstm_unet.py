@@ -40,7 +40,7 @@ def get_image(hash_code):
     images: numpy array
         3-D numpy array of the train set sample, the first dimension of which is the frame.
     """
-    image_folder = DATA_DIR + hash_code
+    image_folder = os.path.join(dl.dataset_folder,'train/data', hash_code)
     image_frames = [img for img in os.listdir(image_folder) if img.endswith(".png")]
     images = []
     for frame in image_frames:
@@ -250,4 +250,4 @@ def LstmUnet(model):
     model.fit(np.stack(X_train,axis=0)[...,np.newaxis], 
         np.stack(np.mean(y_train,axis=3),axis=0)[...,np.newaxis])
     # Making predictions
-    prediction = model.predict(np.stack(X_train,axis=0)[...,np.newaxis])
+    prediction = model.predict(np.stack(X_test,axis=0)[...,np.newaxis])
