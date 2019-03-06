@@ -9,7 +9,7 @@
   
   After downloading/cloning this repository to your local machine, the user will need to open the `Google Cloud SDK Shell`. Once it opens, the user can copy the contents of this repository to the Deep Learning VM instance using the command:
   
-  `gcloud compute scp --recurse /complete/link/to/repository/* user@instance_name-vm:/home/user/`
+  `gcloud compute scp --recurse /complete/link/to/repository/* <user>@<instance_name-vm>:/home/<user>/`
   
   The Deep Learning VM instance is a good place to deploy this project, because it comes pre-installed with a majority of the packages used in this project, such as, 'OpenCV', 'Tensorflow', 'Keras', 'Matplotlib', 'Sklearn', 'Pandas', 'PIL', 'Numpy'. The packages that are installed through the DataLoader class upon spinning up the project include 'Tensorly'. 
     
@@ -23,8 +23,6 @@
 
 ## Contributors
 * See [Contributors](https://github.com/dsp-uga/team-bruce-p2/blob/master/CONTRIBUTORS.md) file for more details.
-
-
 
 ## License
 This project is licensed under the **MIT License**. See [LICENSE](https://github.com/dsp-uga/team-bruce-p2/blob/master/LICENSE) for more details.
